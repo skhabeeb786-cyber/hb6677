@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Free Webinar — Data Governance Basics | ABS PyDaai</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --ink: #0f1117;
+    --white: #ffffff;
+    --accent: #1a6b5a;
+    --accent-light: #22876f;
+    --accent-pale: #e6f5f1;
+    --gold: #d4a843;
+    --gold-pale: #fdf6e3;
+    --muted: #6b7280;
+    --border: #e2e8f0;
+    --card-bg: #f9fafb;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--ink);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 48px;
+    border-bottom: 1px solid var(--border);
+    background: var(--white);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-brand {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--accent);
+    letter-spacing: -0.5px;
+  }
+  .nav-badge {
+    background: var(--accent-pale);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid #b2ddd4;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--ink);
+    color: var(--white);
+    padding: 80px 48px 72px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 420px; height: 420px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(26,107,90,0.35) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: 30%;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,168,67,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-inner { max-width: 860px; margin: 0 auto; position: relative; z-index: 1; }
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(26,107,90,0.3);
+    border: 1px solid rgba(26,107,90,0.5);
+    color: #7ecdc0;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 28px;
+  }
+  .hero-tag span { width: 6px; height: 6px; background: #7ecdc0; border-radius: 50%; display: inline-block; animation: pulse 1.8s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    margin-bottom: 20px;
+  }
+  .hero h1 em { font-style: normal; color: var(--gold); }
+  .hero-sub {
+    font-size: 18px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.7);
+    max-width: 560px;
+    margin-bottom: 40px;
+    line-height: 1.7;
+  }
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-bottom: 0;
+  }
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    color: rgba(255,255,255,0.85);
+  }
+  .meta-icon {
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+  .meta-label { font-size: 11px; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.5px; }
+  .meta-value { font-size: 15px; font-weight: 500; color: var(--white); }
+
+  /* MAIN LAYOUT */
+  .main { max-width: 1000px; margin: 0 auto; padding: 64px 48px; display: grid; grid-template-columns: 1fr 380px; gap: 48px; align-items: start; }
+  @media(max-width:760px){ .main { grid-template-columns:1fr; padding:40px 24px; } nav { padding: 16px 24px; } .hero { padding: 52px 24px; } }
+
+  /* LEFT CONTENT */
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+  }
+
+  /* WHAT YOU LEARN */
+  .learn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 48px; }
+  .learn-item {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .learn-item:hover { border-color: #b2ddd4; transform: translateY(-2px); }
+  .learn-dot {
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+  .learn-text { font-size: 14px; line-height: 1.5; color: var(--ink); }
+
+  /* SPEAKER */
+  .speaker-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 48px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  .speaker-avatar {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: white;
+    flex-shrink: 0;
+  }
+  .speaker-name { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 2px; }
+  .speaker-title { font-size: 13px; color: var(--accent); font-weight: 500; margin-bottom: 10px; }
+  .speaker-bio { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* WHO SHOULD ATTEND */
+  .audience-list { list-style: none; margin-bottom: 48px; }
+  .audience-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #374151;
+  }
+  .audience-list li::before {
+    content: '';
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--accent-pale);
+    border: 1.5px solid #b2ddd4;
+    flex-shrink: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='8' viewBox='0 0 10 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4L3.5 6.5L9 1' stroke='%231a6b5a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  /* REGISTRATION CARD */
+  .reg-card {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+    position: sticky;
+    top: 80px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  }
+  .reg-free-badge {
+    background: var(--gold-pale);
+    border: 1px solid #e8d08a;
+    color: #92700a;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+  .reg-title { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+  .reg-sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+  .seats-warning {
+    background: #fff5f5;
+    border: 1px solid #fecaca;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #b91c1c;
+    font-weight: 500;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .reg-form { display: flex; flex-direction: column; gap: 14px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  label { font-size: 13px; font-weight: 500; color: #374151; }
+  input, select {
+    padding: 11px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--ink);
+    background: var(--white);
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  input:focus, select:focus { border-color: var(--accent); }
+  .reg-btn {
+    background: var(--accent);
+    color: var(--white);
+    border: none;
+    border-radius: 12px;
+    padding: 15px;
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    margin-top: 4px;
+  }
+  .reg-btn:hover { background: var(--accent-light); transform: translateY(-1px); }
+  .reg-divider { text-align: center; font-size: 12px; color: var(--muted); margin: 4px 0; }
+  .whatsapp-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #f0fdf4;
+    border: 1.5px solid #86efac;
+    color: #166534;
+    border-radius: 12px;
+    padding: 13px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .whatsapp-btn:hover { background: #dcfce7; }
+  .whatsapp-icon { width: 20px; height: 20px; }
+  .reg-footer { font-size: 11px; color: var(--muted); text-align: center; margin-top: 14px; line-height: 1.5; }
+  .contact-line { font-size: 13px; color: var(--muted); text-align: center; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
+  .contact-line a { color: var(--accent); text-decoration: none; font-weight: 500; }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 28px;
+    font-size: 13px;
+  }
+  footer strong { color: rgba(255,255,255,0.85); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">ABS PyDaai</div>
+  <div class="nav-badge">Free Webinar · 28 March 2026</div>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag"><span></span> Free Online Webinar</div>
+    <h1>Data Governance<br/><em>Basics</em></h1>
+    <p class="hero-sub">Learn how organizations manage, protect, and maximize the value of their data — and why it's one of the most in-demand skills of 2026.</p>
+    <div class="hero-meta">
+      <div class="meta-item">
+        <div class="meta-icon">📅</div>
+        <div>
+          <div class="meta-label">Date</div>
+          <div class="meta-value">Saturday, 28 March 2026</div>
+        </div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-icon">⏰</div>
+        <div>
+          <div class="meta-label">Time</div>
+          <div class="meta-value">11:00 AM – 12:30 PM IST</div>
+        </div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-icon">💻</div>
+        <div>
+          <div class="meta-label">Mode</div>
+          <div class="meta-value">Online (Zoom / Google Meet)</div>
+        </div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-icon">🎓</div>
+        <div>
+          <div class="meta-label">Cost</div>
+          <div class="meta-value">Absolutely FREE</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- LEFT -->
+  <div>
+
+    <!-- What you'll learn -->
+    <div class="section-label">What you'll learn</div>
+    <div class="section-title">Key takeaways from this session</div>
+    <div class="learn-grid">
+      <div class="learn-item"><div class="learn-dot"></div><div class="learn-text">What is Data Governance and why it matters in 2026</div></div>
+      <div class="learn-item"><div class="learn-dot"></div><div class="learn-text">Data quality, lineage, and lifecycle management</div></div>
+      <div class="learn-item"><div class="learn-dot"></div><div class="learn-text">Roles & responsibilities in a data governance framework</div></div>
+      <div class="learn-item"><div class="learn-dot"></div><div class="learn-text">Data privacy laws — GDPR, DPDP Act India basics</div></div>
+      <div class="learn-item"><div class="learn-dot"></div><div class="learn-text">How governance enables better AI & ML outcomes</div></div>
+      <div class="learn-item"><div class="learn-dot"></div><div class="learn-text">Real-world case studies from Indian enterprises</div></div>
+    </div>
+
+    <!-- Speaker -->
+    <div class="section-label">Your speaker</div>
+    <div class="section-title">Meet the expert</div>
+    <div class="speaker-card">
+      <div class="speaker-avatar">AB</div>
+      <div>
+        <div class="speaker-name">Dr. Ahmed Ben Saleh</div>
+        <div class="speaker-title">Data Science & AI Expert · ABS PyDaai</div>
+        <div class="speaker-bio">Dr. Ahmed Ben Saleh is a seasoned Data Science and AI professional with deep expertise in machine learning, data governance, and enterprise AI strategy. As a key expert at ABS PyDaai, he has helped organizations across industries transform raw data into actionable intelligence. He brings a practical, real-world teaching style that makes complex concepts accessible to all learners.</div>
+      </div>
+    </div>
+
+    <!-- Who should attend -->
+    <div class="section-label">Who should attend</div>
+    <div class="section-title">This webinar is for you if...</div>
+    <ul class="audience-list">
+      <li>You are a student pursuing Data Science, Computer Science, or MBA</li>
+      <li>You are a working professional looking to upskill in Data & AI</li>
+      <li>You are a business analyst or IT professional handling data daily</li>
+      <li>You are curious about how companies manage data responsibly</li>
+      <li>You want to understand compliance and data privacy in India</li>
+    </ul>
+
+  </div>
+
+  <!-- RIGHT — REGISTRATION CARD -->
+  <div>
+    <div class="reg-card">
+      <div class="reg-free-badge">100% Free</div>
+      <div class="reg-title">Reserve your seat</div>
+      <div class="reg-sub">Limited seats available. Register now to confirm your spot.</div>
+
+      <div class="seats-warning">
+        ⚠️ Only 100 seats available — filling fast!
+      </div>
+
+      <form class="reg-form" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label for="name">Full name</label>
+          <input type="text" id="name" placeholder="Your full name" required/>
+        </div>
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input type="email" id="email" placeholder="you@email.com" required/>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone number</label>
+          <input type="tel" id="phone" placeholder="+91 XXXXX XXXXX"/>
+        </div>
+        <div class="form-group">
+          <label for="profile">Your profile</label>
+          <select id="profile">
+            <option value="">Select your profile</option>
+            <option>Student (UG/PG)</option>
+            <option>Working Professional</option>
+            <option>Job Seeker / Fresher</option>
+            <option>Entrepreneur / Business Owner</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <button type="submit" class="reg-btn" id="reg-btn">Register for Free →</button>
+      </form>
+
+      <div class="reg-divider">— or join the WhatsApp group —</div>
+
+      <a href="[YOUR_WHATSAPP_GROUP_LINK]" class="whatsapp-btn" target="_blank">
+        <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.41A9.96 9.96 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z" fill="#25D366"/>
+          <path d="M8.5 9.5c0-.5.4-1 1-1 .3 0 .6.1.7.4l.8 1.8c.1.2.1.5-.1.7l-.5.5c.4.8 1.1 1.5 1.9 1.9l.5-.5c.2-.2.5-.2.7-.1l1.8.8c.3.1.4.4.4.7 0 .6-.5 1-1 1-3.3 0-6-2.7-6-6z" fill="white"/>
+        </svg>
+        Join WhatsApp Group
+      </a>
+
+      <div class="reg-footer">
+        By registering you agree to receive updates about this webinar and future programs from ABS PyDaai. No spam, ever.
+      </div>
+
+      <div class="contact-line">
+        Questions? Call / WhatsApp <a href="tel:7995921786">+91 79959 21786</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <strong>ABS PyDaai</strong> · Telangana, India · info@abspydaai.com · +91 79959 21786<br/>
+  <span style="font-size:11px;margin-top:6px;display:block;">© 2026 ABS PyDaai. All rights reserved.</span>
+</footer>
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = document.getElementById('reg-btn');
+  btn.textContent = 'Registered! Check your email ✓';
+  btn.style.background = '#166534';
+  btn.disabled = true;
+  // Replace this with your actual form submission logic or Google Form redirect
+  // window.location.href = '[YOUR_REGISTRATION_LINK]';
+}
+</script>
+</body>
+</html>
